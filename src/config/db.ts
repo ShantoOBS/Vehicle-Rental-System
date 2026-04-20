@@ -18,8 +18,6 @@ const initDB = async () => {
             password VARCHAR(255) NOT NULL,
             phone VARCHAR(20) NOT NULL,
             role VARCHAR(20) NOT NULL,
-            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-            updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
             CONSTRAINT chk_password_length CHECK (CHAR_LENGTH(password) >= 6),
             CONSTRAINT chk_role CHECK (role IN ('admin', 'customer'))
         );
@@ -33,8 +31,6 @@ const initDB = async () => {
             registration_number VARCHAR(100) NOT NULL UNIQUE,
             daily_rent_price DECIMAL(10,2) NOT NULL,
             availability_status VARCHAR(10) DEFAULT 'available',
-            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-            updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
             CONSTRAINT chk_vehicle_type CHECK (type IN ('car', 'bike', 'van', 'suv')),
             CONSTRAINT chk_availability CHECK (availability_status IN ('available', 'booked')),
             CONSTRAINT chk_price_positive CHECK (daily_rent_price > 0)
@@ -50,7 +46,6 @@ const initDB = async () => {
             rent_end_date DATE NOT NULL,
             total_price DECIMAL(10,2) NOT NULL,
             status VARCHAR(20) DEFAULT 'active',
-
             CONSTRAINT chk_date CHECK (rent_end_date > rent_start_date),
             CONSTRAINT chk_total_price CHECK (total_price > 0),
             CONSTRAINT chk_status CHECK (status IN ('active', 'cancelled', 'returned'))

@@ -1,6 +1,7 @@
 import express,{ Request,Response } from 'express'
 import initDB from './config/db'
 import { userRoutes } from './modules/Users/user.routes';
+import { vehiclesRoutes } from './modules/Vehicles/Vehicles.routes';
 
 
 
@@ -13,7 +14,13 @@ app.use(express.urlencoded());
 
 initDB();
 
+// user curd operation
 app.use("/api/v1/users",userRoutes)
+
+// vehical curd operation
+app.use("/api/v1/vehicles",vehiclesRoutes)
+
+
 
 
 

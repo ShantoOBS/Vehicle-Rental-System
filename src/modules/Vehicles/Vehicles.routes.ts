@@ -5,6 +5,15 @@ const routes=express.Router();
 
 routes.post("/",vehicleController.createVehicle);
 
+routes.get("/",vehicleController.getVehical);
+
+routes.get("/:vehicleId",vehicleController.getSingleVehical);
+
+routes.put("/:vehicleId",vehicleController.updateVehicle);
+
+routes.delete("/:vehicleId",vehicleController.deleteVehicle);
+
+
 
 
 
