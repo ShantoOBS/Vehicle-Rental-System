@@ -1,8 +1,12 @@
-import express from 'express'
-import { Request,Response } from 'express'
+import express,{ Request,Response } from 'express'
+import initDB from './config/db'
 
 const app = express()
 const port = 5000
+
+initDB();
+
+
 
 app.get('/', (req:Request, res:Response) => {
   res.send('Vehicle Rental System')
