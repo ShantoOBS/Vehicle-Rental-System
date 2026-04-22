@@ -40,7 +40,7 @@ const initDB = async () => {
     await pool.query(`
         CREATE TABLE IF NOT EXISTS bookings (
             id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-            user_id INT REFERENCES users(id) ON DELETE CASCADE,
+            customer_id INT REFERENCES users(id) ON DELETE CASCADE,
             vehicle_id INT REFERENCES vehicles(id) ON DELETE CASCADE,
             rent_start_date DATE NOT NULL,
             rent_end_date DATE NOT NULL,

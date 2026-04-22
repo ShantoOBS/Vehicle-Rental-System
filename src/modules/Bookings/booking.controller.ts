@@ -29,6 +29,44 @@ const createBooking=async(req:Request,res:Response)=>{
       
 }
 
+const updateBooking = async (req: Request, res: Response) => {
+   
+     const{status}=req.body;
+ 
+
+    try {
+        const result = await bookingService.updateBooking( status,req.params.bookingId as string);
+
+        if(status=="returned"){
+              res.status(200).json({
+            success: true,
+            message: `Booking marked as returned. Vehicle is now available`,
+            data: {
+                ...result.rows[0],
+                 "vehicle": {
+                 "availability_status": "available"
+               }
+            },
+         })
+        }else{
+            res.status(200).json({
+            success: true,
+            message: `Booking ${status} successfully`,
+            data: result.rows[0],
+        })
+        }      
+
+    } catch (err: any) {
+
+        res.status(500).json({
+            success: false,
+            message: err.message
+        })
+      }
+
+    }
+
 export const bookingController={
      createBooking,
+     updateBooking
 }

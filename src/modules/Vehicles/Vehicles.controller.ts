@@ -8,7 +8,7 @@ const createVehicle = async (req: Request, res: Response) => {
     try {
         const result = await vehicalService.createVehical(vehicle_name,type,registration_number,daily_rent_price,availability_status);
 
-        res.status(200).json({
+        res.status(201).json({
             success: true,
             message: "Vehicle created successfully",
             data: result.rows[0],
