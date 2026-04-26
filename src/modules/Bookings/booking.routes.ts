@@ -9,6 +9,8 @@ routes.post("/",bookingController.createBooking);
 
 routes.put("/:bookingId",bookingController.updateBooking);
 
+routes.get("/",bookingController.getBooking);
+
 
 export const bookingRoutes=routes;
 

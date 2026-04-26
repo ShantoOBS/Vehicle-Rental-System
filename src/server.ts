@@ -3,6 +3,7 @@ import initDB from './config/db'
 import { userRoutes } from './modules/Users/user.routes';
 import { vehiclesRoutes } from './modules/Vehicles/Vehicles.routes';
 import { bookingRoutes } from './modules/Bookings/booking.routes';
+import { authRoutes } from './modules/Auth/auth.routes';
 
 
 
@@ -24,6 +25,12 @@ app.use("/api/v1/vehicles",vehiclesRoutes)
 
 // booking curd operation
 app.use("/api/v1/bookings",bookingRoutes);
+
+
+app.use("/api/v1/auth",authRoutes);
+
+
+
 
 
 

@@ -7,20 +7,20 @@ const createBooking = async (
   rent_end_date: string
 ) => {
 
-  
- const vehicleRes = await pool.query(
+
+  const vehicleRes = await pool.query(
     `SELECT vehicle_name, daily_rent_price FROM vehicles WHERE id = $1`,
     [vehicle_id]
   );
 
   const vehicle = vehicleRes.rows[0];
 
- 
+
   if (!vehicle) {
     throw new Error("Vehicle not found");
   }
 
- 
+
   await pool.query(
     `UPDATE vehicles SET availability_status=$1 WHERE id=$2`,
     ["booked", vehicle_id]
@@ -46,29 +46,91 @@ const createBooking = async (
 
 
   return {
-     booking,
-     vehicle
+    booking,
+    vehicle
   };
 };
 
-const updateBooking=async(status:string,bookingId : string)=>{
+const updateBooking = async (status: string, bookingId: string) => {
 
-    const vehicle=await pool.query(`SELECT vehicle_id FROM bookings WHERE id=$1 `,[bookingId]);
+  const vehicle = await pool.query(`SELECT vehicle_id FROM bookings WHERE id=$1 `, [bookingId]);
 
-    const vehicle_id=vehicle.rows[0].vehicle_id;
+  const vehicle_id = vehicle.rows[0].vehicle_id;
 
-     await pool.query(
+  await pool.query(
     `UPDATE vehicles SET availability_status=$1 WHERE id=$2`,
     ["available", vehicle_id]
-    );
+  );
 
-     return await pool.query(`UPDATE bookings SET status=$1 WHERE id=$2 RETURNING *`,[status,bookingId]);
-     
+  return await pool.query(`UPDATE bookings SET status=$1 WHERE id=$2 RETURNING *`, [status, bookingId]);
+
+}
+
+const getBooking = async (isAdmin:string) => {
+
+   
+
+
+   if(isAdmin=="admin"){
+     return await pool.query(`
+SELECT 
+    b.id,
+    b.customer_id,
+    b.vehicle_id,
+    b.rent_start_date,
+    b.rent_end_date,
+    b.total_price,
+    b.status,
+
+    json_build_object(
+        'name', u.name,
+        'email', u.email
+    ) AS customer,
+
+    json_build_object(
+        'vehicle_name', v.vehicle_name,
+        'registration_number', v.registration_number
+    ) AS vehicle
+
+FROM bookings b
+JOIN users u ON b.customer_id = u.id
+JOIN vehicles v ON b.vehicle_id = v.id;
+`);
+   }else{
+
+        return await pool.query(`
+SELECT 
+    b.id,
+    b.customer_id,
+    b.vehicle_id,
+    b.rent_start_date,
+    b.rent_end_date,
+    b.total_price,
+    b.status,
+
+  
+    json_build_object(
+        'vehicle_name', v.vehicle_name,
+        'registration_number', v.registration_number,
+        'type' , v.type
+    ) AS vehicle
+
+FROM bookings b
+
+JOIN vehicles v ON b.vehicle_id = v.id;
+`);
+
+   }
+
+
+ 
+
 }
 
 
 
-export const bookingService={ 
-    createBooking,
-    updateBooking,
+export const bookingService = {
+  createBooking,
+  updateBooking,
+  getBooking
 };

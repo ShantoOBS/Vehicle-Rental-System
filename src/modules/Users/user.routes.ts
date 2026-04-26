@@ -4,7 +4,6 @@ import { userController } from './user.controller';
 const routes=express.Router();
 
 
-routes.post("/",userController.createUser);
 
 routes.get("/",userController.getUser);
 

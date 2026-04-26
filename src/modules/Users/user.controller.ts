@@ -1,28 +1,6 @@
 import { Request, Response } from "express";
 import { userService } from "./user.service";
 
-const createUser = async (req: Request, res: Response) => {
-
-    const { name, email, password, phone, role } = req.body;
-
-    try {
-        const result = await userService.createUser(name, email, password, phone, role);
-
-        res.status(201).json({
-            success: true,
-            message: "User created successfully",
-            data: result.rows[0],
-        })
-
-    } catch (err: any) {
-
-        res.status(500).json({
-            success: false,
-            message: err.message
-        })
-      }
-
-    }
 
 
 const getUser = async (req: Request, res: Response) => {
@@ -124,7 +102,7 @@ const deleteUser = async (req: Request, res: Response) => {
 
 
     export const userController={
-          createUser,
+          
           getUser,
           getSingleUser,
           updateUser,
