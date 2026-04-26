@@ -7,6 +7,8 @@ const routes=express.Router();
 
  routes.post("/signup",authController.createUser);
 
+ routes.post("/signin",authController.loginUser);
+
  
 
 export const  authRoutes=routes   
