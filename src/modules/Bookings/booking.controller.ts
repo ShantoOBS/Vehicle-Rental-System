@@ -32,12 +32,14 @@ const createBooking=async(req:Request,res:Response)=>{
 const updateBooking = async (req: Request, res: Response) => {
    
      const{status}=req.body;
+
+     const role=req.user?.role;
  
 
     try {
         const result = await bookingService.updateBooking( status,req.params.bookingId as string);
 
-        if(status=="returned"){
+        if(role=='admin' && status=="returned"){
               res.status(200).json({
             success: true,
             message: `Booking marked as returned. Vehicle is now available`,
@@ -48,11 +50,17 @@ const updateBooking = async (req: Request, res: Response) => {
                }
             },
          })
-        }else{
+        }else if(role=='customer' && status=="cancelled"){
             res.status(200).json({
             success: true,
             message: `Booking ${status} successfully`,
             data: result.rows[0],
+        })
+        }else{
+               res.status(403).json({
+            success: false,
+            message: `Valid token but insufficient permissions`,
+           
         })
         }      
 
@@ -68,9 +76,12 @@ const updateBooking = async (req: Request, res: Response) => {
 
 const getBooking= async(req:Request,res:Response)   =>{
           
+     const user=req.user;
+
+    
 
      try {
-        const result = await bookingService.getBooking("c");
+        const result = await bookingService.getBooking(user?.role as string);
 
     
             res.status(200).json({

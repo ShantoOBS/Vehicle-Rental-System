@@ -32,6 +32,12 @@ const loginUser = async (req: Request, res: Response) => {
     try {
         const result = await authService.userLogin(email, password);
 
+        if(result==null) res.status(404).json({
+            success: true,
+            message: "Not Found",
+            data: result,
+        })
+
         res.status(201).json({
             success: true,
             message: "Login successful",

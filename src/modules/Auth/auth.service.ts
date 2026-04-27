@@ -29,7 +29,7 @@ const userLogin=async(email:string,password:string)=>{
          const token=jwt.sign(user,config.token_secret as string,{ expiresIn: '7d' });
 
 
-         console.log(token);
+      //    console.log(token);
 
          return {"token":token,"user":{...data.rows[0]}};
 
