@@ -153,8 +153,8 @@ Error responses follow this structure:
 
 ## Author
 
-- Name: `Your Name`
-- Email: `your.email@example.com`
+- Name: `Shanta Shil`
+- Email: `roys22127@gamil.com`
 
 ---
 
