@@ -6,7 +6,7 @@ This project is built with `Node.js`, `TypeScript`, `Express`, and `PostgreSQL`,
 
 ## Live Project
 
-- Live API: `https://assignment-2-navy-eta.vercel.app/`
+- Live API: https://assignment-2-navy-eta.vercel.app/
 -
 
 > Replace the links above with your real deployment and repository URLs.
